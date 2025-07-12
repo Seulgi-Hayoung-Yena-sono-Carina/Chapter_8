@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/articles")
 public class BlogApiController {
 
     private final BlogService blogService;
@@ -21,13 +21,13 @@ public class BlogApiController {
     /**
      * @RequestBody: 클라이언트가 보낸 JSON 데이터를 우리가 지정한 DTO 클래스에 자동으로 매핑
      */
-    @PostMapping("/articles")
+    @PostMapping
     public ResponseEntity<ArticleResponse> addArticle(@RequestBody AddArticleRequest request){
         Article savedArticle = blogService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ArticleResponse(savedArticle));
     }
 
-    @GetMapping("/articles")
+    @GetMapping
     public ResponseEntity<List<ArticleResponse>> findAllArticles(){
         /**
          * .stream(): 리스트를 스트림(Stream) 으로 변환 (순차 처리 가능하게 함)
@@ -44,20 +44,20 @@ public class BlogApiController {
         return ResponseEntity.ok().body(articles);
     }
 
-    @GetMapping("/articles/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable("id") Long id){
         Article article = blogService.findById(id);
 
         return ResponseEntity.ok().body(new ArticleResponse(article));
     }
 
-    @DeleteMapping("/articles/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("id") Long id){
         blogService.delete(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/articles/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") long id,
                                                          @RequestBody UpdateArticleRequest request){
         Article updatedArticle = blogService.update(id, request);
