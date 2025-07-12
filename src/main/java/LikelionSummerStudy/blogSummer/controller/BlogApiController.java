@@ -22,9 +22,9 @@ public class BlogApiController {
      * @RequestBody: 클라이언트가 보낸 JSON 데이터를 우리가 지정한 DTO 클래스에 자동으로 매핑
      */
     @PostMapping("/articles")
-    public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request){
+    public ResponseEntity<ArticleResponse> addArticle(@RequestBody AddArticleRequest request){
         Article savedArticle = blogService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ArticleResponse(savedArticle));
     }
 
     @GetMapping("/articles")
@@ -58,10 +58,9 @@ public class BlogApiController {
     }
 
     @PutMapping("/articles/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable("id") long id,
+    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") long id,
                                                          @RequestBody UpdateArticleRequest request){
         Article updatedArticle = blogService.update(id, request);
-
-        return ResponseEntity.ok().body(updatedArticle);
+        return ResponseEntity.ok().body(new ArticleResponse(updatedArticle));
     }
 }
