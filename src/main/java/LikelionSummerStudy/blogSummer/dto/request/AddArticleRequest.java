@@ -1,5 +1,4 @@
 package LikelionSummerStudy.blogSummer.dto.request;
-
 import LikelionSummerStudy.blogSummer.domain.Article;
 import lombok.AllArgsConstructor;
 import lombok.Data;

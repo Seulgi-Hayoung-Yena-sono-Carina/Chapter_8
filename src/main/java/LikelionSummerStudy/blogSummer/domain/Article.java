@@ -3,6 +3,8 @@ package LikelionSummerStudy.blogSummer.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Optional;
+
 @Entity
 @Data
 @NoArgsConstructor(access= AccessLevel.PROTECTED) //protected type 기본 생성자
@@ -30,5 +32,10 @@ public class Article {
     public void update(String title, String content){
         this.title=title;
         this.content=content;
+    }
+
+    public void update(Optional<String> title, Optional<String> content) {
+        title.ifPresent(t -> this.title = t);  // title이 제공되면 업데이트
+        content.ifPresent(c -> this.content = c);  // content가 제공되면 업데이트
     }
 }

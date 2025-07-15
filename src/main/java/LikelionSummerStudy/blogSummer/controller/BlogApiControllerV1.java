@@ -9,12 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
+import java.util.List;
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/articles")
-public class BlogApiController {
+@RequestMapping("/api/articles/v1")
+public class BlogApiControllerV1 {
 
     private final BlogService blogService;
 
@@ -29,18 +29,7 @@ public class BlogApiController {
 
     @GetMapping
     public ResponseEntity<List<ArticleResponse>> findAllArticles(){
-        /**
-         * .stream(): 리스트를 스트림(Stream) 으로 변환 (순차 처리 가능하게 함)
-         * .map(ArticleResponse::new): 각 Article 객체를 ArticleResponse 객체로 변환
-         * stream()으로 흘러온 각 Article 객체에 대해 new ArticleResponse(article)을 수행
-         * .toList(): 변환된 요소들을 다시 리스트로 수집
-         * List<Article> → List<ArticleResponse>로 변환하는 것이 목적!
-         * */
-        List<ArticleResponse> articles = blogService.findAll()
-                .stream()
-                .map(ArticleResponse::new)
-                .toList();
-
+        List<ArticleResponse> articles = blogService.findAll();
         return ResponseEntity.ok().body(articles);
     }
 
@@ -51,16 +40,25 @@ public class BlogApiController {
         return ResponseEntity.ok().body(new ArticleResponse(article));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable("id") Long id){
-        blogService.delete(id);
-        return ResponseEntity.ok().build();
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<ArticleResponse> updateArticle(@PathVariable("id") long id,
                                                          @RequestBody UpdateArticleRequest request){
         Article updatedArticle = blogService.update(id, request);
         return ResponseEntity.ok().body(new ArticleResponse(updatedArticle));
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ArticleResponse> patchArticle(@PathVariable("id") long id,
+                                                        @RequestBody UpdateArticleRequest request) {
+        Article updatedArticle = blogService.patch(id, request);
+        return ResponseEntity.ok().body(new ArticleResponse(updatedArticle));
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable("id") Long id){
+        blogService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
