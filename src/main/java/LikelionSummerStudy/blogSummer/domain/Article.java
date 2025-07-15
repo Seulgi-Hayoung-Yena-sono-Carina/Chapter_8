@@ -35,6 +35,9 @@ public class Article {
     }
 
     public void update(Optional<String> title, Optional<String> content) {
+
+        //ifPresent: Optional.empty()라면 아무것도 () 안의 코드 수행 X
+
         title.ifPresent(t -> this.title = t);  // title이 제공되면 업데이트
         content.ifPresent(c -> this.content = c);  // content가 제공되면 업데이트
     }

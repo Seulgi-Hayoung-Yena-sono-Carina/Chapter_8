@@ -47,6 +47,7 @@ public class BlogService {
     public Article patch(long id, UpdateArticleRequest request) {
         Article article = blogRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+        //Optional.ofNullable은 값이 null일 경우 빈 Optional 객체를 반환하고, 값이 존재하면 해당 값을 감싼 Optional 객체를 반환
         article.update(Optional.ofNullable(request.getTitle()), Optional.ofNullable(request.getContent()));
         return article;
     }
