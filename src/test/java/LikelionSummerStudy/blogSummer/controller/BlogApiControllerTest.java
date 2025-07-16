@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc //MockMvc를 자동 구성
-public class BlogApiControllerV1Test {
+public class BlogApiControllerTest {
 
     //HTTP 요청을 보내고 응답을 테스트할 수 있게 해주는 도구
     @Autowired

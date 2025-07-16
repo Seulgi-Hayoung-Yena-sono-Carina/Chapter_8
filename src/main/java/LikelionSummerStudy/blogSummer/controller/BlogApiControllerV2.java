@@ -15,6 +15,7 @@ import java.util.List;
 /**
 * API 반환 예쁘게 다듬은 버전
 **/
+
 @RequiredArgsConstructor
 @RestController
 //@RequestMapping("/api/articles/v2")
@@ -32,9 +33,18 @@ public class BlogApiControllerV2 {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<ArticleResponse>>> findAllArticles() {
-        List<ArticleResponse> articles = blogService.findAll();  // 이미 변환된 리스트를 그대로 사용
-        return ResponseEntity.ok(new ApiResponse<>(true, HttpStatus.OK.value(), "게시글 조회 성공", articles));
+        // 서비스에서 Article 목록을 가져옴
+        List<Article> articles = blogService.findAll();
+
+        // Article 목록을 ArticleResponse 목록으로 변환
+        List<ArticleResponse> articleResponses = articles.stream()
+                .map(ArticleResponse::new)  // Article을 ArticleResponse로 변환
+                .toList(); // 변환된 리스트를 반환
+
+        return ResponseEntity.ok(new ApiResponse<>(true, HttpStatus.OK.value(), "게시글 조회 성공", articles.stream().map(ArticleResponse::new).toList()));
+
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ArticleResponse>> findArticle(@PathVariable("id") Long id) {

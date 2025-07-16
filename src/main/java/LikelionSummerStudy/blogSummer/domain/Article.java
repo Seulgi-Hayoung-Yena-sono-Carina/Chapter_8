@@ -2,9 +2,14 @@ package LikelionSummerStudy.blogSummer.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Data
 @NoArgsConstructor(access= AccessLevel.PROTECTED) //protected type 기본 생성자
@@ -22,6 +27,16 @@ public class Article {
 
     @Column(name="content", nullable = false)
     private String content;
+
+
+    @CreatedDate
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name="updated_at")
+    private LocalDateTime updatedAt;
+
 
     @Builder //일부 필드만 포함한 빌더 생성자를 명시적으로 정의
     public Article(String title, String content){

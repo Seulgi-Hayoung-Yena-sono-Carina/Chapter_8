@@ -63,7 +63,7 @@ public class BlogApiControllerV2Test {
     @Test
     public void addArticle() throws Exception {
         // given
-        final String url = "/api/articles";
+        final String url = "/api/articles/v2";
         final String title = "title";
         final String content = "content";
         final AddArticleRequest userRequest = new AddArticleRequest(title, content);
@@ -89,7 +89,7 @@ public class BlogApiControllerV2Test {
     @Test
     public void findAllArticles() throws Exception {
         // given
-        final String url = "/api/articles";
+        final String url = "/api/articles/v2";
         final String title = "title";
         final String content = "content";
 
@@ -115,7 +115,7 @@ public class BlogApiControllerV2Test {
     @Test
     public void findArticle() throws Exception {
         // given
-        final String url = "/api/articles/{id}";
+        final String url = "/api/articles/v2/{id}";
         final String title = "title";
         final String content = "content";
 
@@ -140,7 +140,7 @@ public class BlogApiControllerV2Test {
     @Test
     public void deleteArticle() throws Exception {
         //given
-        final String url = "/api/articles/{id}";
+        final String url = "/api/articles/v2/{id}";
         final String title = "title";
         final String content = "content";
 
@@ -164,7 +164,7 @@ public class BlogApiControllerV2Test {
     @Test
     public void updateArticle() throws Exception {
         //given
-        final String url = "/api/articles/{id}";
+        final String url = "/api/articles/v2/{id}";
         final String title = "title";
         final String content = "content";
 

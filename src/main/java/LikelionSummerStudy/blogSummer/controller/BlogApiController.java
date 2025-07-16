@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/articles/v1")
-public class BlogApiControllerV1 {
+@RequestMapping("/api/articles")
+public class BlogApiController {
 
     private final BlogService blogService;
 
@@ -29,8 +29,11 @@ public class BlogApiControllerV1 {
 
     @GetMapping
     public ResponseEntity<List<ArticleResponse>> findAllArticles(){
-        List<ArticleResponse> articles = blogService.findAll();
-        return ResponseEntity.ok().body(articles);
+        List<Article> articles = blogService.findAll();
+        List<ArticleResponse> articleResponse = articles.stream()
+                .map(ArticleResponse::new)  // Article을 ArticleResponse로 변환
+                .toList();
+        return ResponseEntity.ok().body(articleResponse);
     }
 
     @GetMapping("/{id}")

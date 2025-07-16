@@ -19,10 +19,8 @@ public class BlogService {
         return blogRepository.save(request.toEntity());
     }
 
-    public List<ArticleResponse> findAll() {
-        return blogRepository.findAll().stream()
-                .map(ArticleResponse::new)  // Article을 ArticleResponse로 변환
-                .toList();// 변환된 리스트를 반환
+    public List<Article> findAll() {
+        return blogRepository.findAll();
     }
 
     public Article findById(long id){
